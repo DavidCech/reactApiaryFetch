@@ -11,7 +11,8 @@ class App extends Component {
 
   state = {
     list: [],
-    html: ""
+    html: "",
+    hidden: true
   };
 
   componentDidMount() {
@@ -23,23 +24,26 @@ class App extends Component {
 
   printData() {
     let list = "";
-    list = this.state.list.map(kokot => (
+    list = this.state.list.map(student => (
       <div>
-        {kokot.firstName} + {kokot.lastName}
+        {student.firstName} + {student.lastName}
       </div>
     ));
+
     this.setState({
-      html: list
+      html: list,
+      hidden: !this.state.hidden
     });
   }
 
   render() {
+    let content = this.state.hidden ? "" : this.state.html;
+    let buttonDisplay = this.state.hidden ? "Show Students!" : "Hide Students!";
     return (
       <div className="App">
-        <h1>Hello CodeSandbox</h1>
-        <h2>Start editing to see some magic happen!</h2>
-        <button onClick={this.printData.bind(this)}>Click me!</button>
-        <p>{this.state.html}</p>
+        <h1>Fetch list of students</h1>
+        <button onClick={this.printData.bind(this)}>{buttonDisplay}</button>
+        <p>{content}</p>
       </div>
     );
   }
